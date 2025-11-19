@@ -26,3 +26,29 @@ Each service has its own README with specific instructions. Navigate to the resp
 
 ## Architecture
 This is a monorepo structure where all services are maintained in a single repository. Each service is independently deployable and can be developed, tested, and deployed separately.
+
+## Development Guidelines
+
+### Branching Strategy
+We follow a structured branching strategy to ensure smooth collaboration across multiple teams and services. Please review our comprehensive branching strategy document before starting development:
+
+📖 **[Branching Strategy Document](doc/branching-strategy.md)**
+
+Key highlights:
+- `main` branch is always production-ready
+- `develop` branch for integration and QA
+- Feature branches: `feature/<service>/<short-desc>`
+- Hotfix branches: `hotfix/<short-desc>`
+- Follow conventional commit messages
+
+### Pull Request Template
+When creating pull requests, please use our standardized PR template to ensure all necessary information is provided:
+
+📋 **[Pull Request Template](doc/pull-request-template.md)**
+
+The template includes:
+- Description and related tickets
+- Type of change (feat, fix, chore, docs, test)
+- Testing checklist
+- Services affected
+- Deployment notes
