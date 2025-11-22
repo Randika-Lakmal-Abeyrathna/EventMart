@@ -1,0 +1,12 @@
+[{"name": "setup", "color": "0366d6", "description": "Initial project or repo setup tasks"},
+{"name": "feature", "color": "0e8a16", "description": "New feature or enhancement"},
+{"name": "database", "color": "5319e7", "description": "Database schema, migrations, or data work"},
+{"name": "config", "color": "1d76db", "description": "Configuration, properties, or environment settings"},
+{"name": "chore", "color": "bfdadc", "description": "Maintenance or non-feature tasks"},
+{"name": "domain", "color": "b60205", "description": "Domain model and entity-related work"},
+{"name": "enhancement", "color": "84b6eb", "description": "Improvements to existing features"},
+{"name": "service", "color": "0052cc", "description": "Service layer or business logic tasks"},
+{"name": "api", "color": "fbca04", "description": "REST API endpoints and controller tasks"},
+{"name": "quality", "color": "c2e0c6", "description": "Testing, validation, exception handling, stability"},
+{"name": "infra", "color": "d93f0b", "description": "Infrastructure, runtime environment, or tooling"},
+{"name": "devops", "color": "5319e7", "description": "CI/CD pipelines, Docker, Kubernetes, AWS"}]
