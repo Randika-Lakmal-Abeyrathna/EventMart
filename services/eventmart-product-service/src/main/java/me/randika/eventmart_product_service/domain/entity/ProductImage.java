@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "product_image")
@@ -17,9 +18,9 @@ public class ProductImage {
     @Id
     @UuidGenerator
     @GeneratedValue
-    private String id;
+    private UUID id;
     @Column(name = "product_id",nullable = false)
-    private String productId;
+    private UUID productId;
     @Column(name = "image_url",nullable = false)
     private String imageUrl;
     @Column(name = "is_primary", nullable = false)

@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,10 +21,11 @@ class ProductMapperTest {
 
     @Test
     void testProductRequestToEntity() {
+        UUID categoryId = UUID.randomUUID();
         ProductRequest req = new ProductRequest(
                 "Laptop",
                 "Gaming laptop",
-                "cat-123",
+                categoryId,
                 new BigDecimal("4999.99"),
                 "ASUS",
                 "ACTIVE"
@@ -33,7 +35,7 @@ class ProductMapperTest {
 
         assertEquals("Laptop", entity.getName());
         assertEquals("Gaming laptop", entity.getDescription());
-        assertEquals("cat-123", entity.getCategoryId());
+        assertEquals(categoryId, entity.getCategoryId());
         assertEquals(new BigDecimal("4999.99"), entity.getPrice());
         assertEquals(ProductStatus.ACTIVE, entity.getStatus());
 
@@ -45,14 +47,16 @@ class ProductMapperTest {
 
     @Test
     void testProductEntityToResponse() {
+        UUID id = UUID.randomUUID();
+        UUID categoryId = UUID.randomUUID();
         Product product = Product.builder()
-                .id("p-1")
+                .id(id)
                 .name("Phone")
                 .description("Nice phone")
                 .price(new BigDecimal("900"))
                 .brand("Samsung")
                 .status(ProductStatus.ACTIVE)
-                .categoryId("cat-200")
+                .categoryId(categoryId)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -61,10 +65,10 @@ class ProductMapperTest {
 
         assertEquals("Phone", dto.name());
         assertEquals("Samsung", dto.brand());
-        assertEquals("cat-200", dto.categoryId());
+        assertEquals(categoryId, dto.categoryId());
         assertEquals(new BigDecimal("900"), dto.price());
         assertEquals("ACTIVE", dto.status());
-        assertEquals("p-1", dto.id());
+        assertEquals(id, dto.id());
         assertEquals(product.getCreatedAt(), dto.createdAt());
         assertEquals(product.getUpdatedAt(), dto.updatedAt());
     }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +31,11 @@ class ProductImageMapperTest {
 
     @Test
     void testEntityToResponse() {
+        UUID id = UUID.randomUUID();
+        UUID productId = UUID.randomUUID();
         ProductImage entity = ProductImage.builder()
-                .id("img-1")
-                .productId("prod-1")
+                .id(id)
+                .productId(productId)
                 .imageUrl("http://image.com/1.png")
                 .isPrimary(true)
                 .createdAt(LocalDateTime.now())
@@ -41,7 +44,7 @@ class ProductImageMapperTest {
         ProductImageResponse res = mapper.toResponse(entity);
 
         assertNotNull(res);
-        assertEquals("img-1", res.id());
+        assertEquals(id, res.id());
         assertEquals("http://image.com/1.png", res.imageUrl());
         assertTrue(res.isPrimary());
     }

@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "product_category")
@@ -19,12 +20,12 @@ public class ProductCategory {
     @Id
     @UuidGenerator
     @GeneratedValue
-    private String id;
+    private UUID id;
     @Column(nullable = false,unique = true)
     private String name;
     private String description;
     @Column(name="parent_category_id")
-    private String parentCategoryId;
+    private UUID parentCategoryId;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")

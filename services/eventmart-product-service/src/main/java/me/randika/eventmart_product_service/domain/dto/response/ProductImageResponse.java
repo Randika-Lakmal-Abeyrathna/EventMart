@@ -1,8 +1,10 @@
 package me.randika.eventmart_product_service.domain.dto.response;
 
+import java.util.UUID;
+
 public record ProductImageResponse(
-        String id,
-        String productId,
+        UUID id,
+        UUID productId,
         String imageUrl,
         boolean isPrimary
 ) {
