@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,10 +17,11 @@ class ProductCategoryMapperTest {
 
     @Test
     void testRequestToEntity() {
+        UUID rootCategory = UUID.randomUUID();
         ProductCategoryRequest req = new ProductCategoryRequest(
                 "Electronics",
                 "Electronic devices",
-                "root-cat"
+                rootCategory
         );
 
         ProductCategory entity = mapper.toEntity(req);
@@ -27,7 +29,7 @@ class ProductCategoryMapperTest {
         assertNotNull(entity);
         assertEquals("Electronics", entity.getName());
         assertEquals("Electronic devices", entity.getDescription());
-        assertEquals("root-cat", entity.getParentCategoryId());
+        assertEquals(rootCategory, entity.getParentCategoryId());
 
         // ignored fields
         assertNull(entity.getId());
@@ -37,11 +39,14 @@ class ProductCategoryMapperTest {
 
     @Test
     void testEntityToResponse() {
+        UUID id = UUID.randomUUID();
+        UUID rootCategory = UUID.randomUUID();
+
         ProductCategory entity = ProductCategory.builder()
-                .id("cat-1")
+                .id(id)
                 .name("Home")
                 .description("Home appliances")
-                .parentCategoryId("root-cat")
+                .parentCategoryId(rootCategory)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -49,9 +54,9 @@ class ProductCategoryMapperTest {
         ProductCategoryResponse res = mapper.toResponse(entity);
 
         assertNotNull(res);
-        assertEquals("cat-1", res.id());
+        assertEquals(id, res.id());
         assertEquals("Home", res.name());
         assertEquals("Home appliances", res.description());
-        assertEquals("root-cat", res.parentCategoryId());
+        assertEquals(rootCategory, res.parentCategoryId());
     }
 }

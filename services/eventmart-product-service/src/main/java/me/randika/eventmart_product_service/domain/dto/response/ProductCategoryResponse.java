@@ -1,9 +1,11 @@
 package me.randika.eventmart_product_service.domain.dto.response;
 
+import java.util.UUID;
+
 public record ProductCategoryResponse(
-        String id,
+        UUID id,
         String name,
         String description,
-        String parentCategoryId
+        UUID parentCategoryId
 ) {
 }

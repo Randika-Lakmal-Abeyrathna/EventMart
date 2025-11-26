@@ -6,6 +6,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "product")
@@ -19,13 +20,13 @@ public class Product {
     @Id
     @UuidGenerator
     @GeneratedValue
-    private String id;
+    private UUID id;
     @Column(nullable = false,unique = true)
     private String name;
     private String description;
     private String brand;
     @Column(name = "category_id")
-    private String categoryId;
+    private  UUID categoryId;
     @Column(nullable=false)
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
