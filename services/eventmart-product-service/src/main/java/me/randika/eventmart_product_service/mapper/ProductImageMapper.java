@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 public interface ProductImageMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "productId", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     ProductImage toEntity(ProductImageRequest productImageRequest);
 

@@ -23,6 +23,7 @@ class ProductMapperTest {
     void testProductRequestToEntity() {
         UUID categoryId = UUID.randomUUID();
         ProductRequest req = new ProductRequest(
+                "sku-001",
                 "Laptop",
                 "Gaming laptop",
                 categoryId,
@@ -33,6 +34,7 @@ class ProductMapperTest {
 
         Product entity = productMapper.toEntity(req);
 
+        assertEquals("sku-001", entity.getProductCode());
         assertEquals("Laptop", entity.getName());
         assertEquals("Gaming laptop", entity.getDescription());
         assertEquals(categoryId, entity.getCategoryId());
@@ -51,6 +53,7 @@ class ProductMapperTest {
         UUID categoryId = UUID.randomUUID();
         Product product = Product.builder()
                 .id(id)
+                .productCode("sku-001")
                 .name("Phone")
                 .description("Nice phone")
                 .price(new BigDecimal("900"))
@@ -63,6 +66,7 @@ class ProductMapperTest {
 
         ProductResponse dto = productMapper.toResponse(product);
 
+        assertEquals("sku-001", dto.productCode());
         assertEquals("Phone", dto.name());
         assertEquals("Samsung", dto.brand());
         assertEquals(categoryId, dto.categoryId());

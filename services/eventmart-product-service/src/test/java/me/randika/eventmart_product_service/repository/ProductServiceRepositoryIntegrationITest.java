@@ -62,6 +62,7 @@ class ProductServiceRepositoryIntegrationITest {
         productCategoryRepository.save(category);
 
         Product product = Product.builder()
+                .productCode("sku-001")
                 .name("Laptop")
                 .description("Gaming Laptop")
                 .brand("ASUS")

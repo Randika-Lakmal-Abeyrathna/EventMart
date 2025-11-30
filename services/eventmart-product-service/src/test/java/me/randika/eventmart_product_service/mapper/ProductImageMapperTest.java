@@ -16,8 +16,10 @@ class ProductImageMapperTest {
 
     @Test
     void testRequestToEntity() {
+        UUID productId = UUID.randomUUID();
         ProductImageRequest req = new ProductImageRequest(
                 "http://image.com/1.png",
+                productId,
                 true
         );
 
@@ -25,6 +27,7 @@ class ProductImageMapperTest {
 
         assertNotNull(entity);
         assertEquals("http://image.com/1.png", entity.getImageUrl());
+        assertEquals(productId, entity.getProductId());
         assertTrue( entity.getIsPrimary());
 
     }
@@ -46,6 +49,7 @@ class ProductImageMapperTest {
         assertNotNull(res);
         assertEquals(id, res.id());
         assertEquals("http://image.com/1.png", res.imageUrl());
+        assertEquals(productId, res.productId());
         assertTrue(res.isPrimary());
     }
 }
