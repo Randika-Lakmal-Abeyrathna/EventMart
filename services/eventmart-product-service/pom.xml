@@ -94,6 +94,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <!-- Inline Mockito to avoid dynamic Java agent attachment at runtime -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
     <!-- Testcontainers BOM -->

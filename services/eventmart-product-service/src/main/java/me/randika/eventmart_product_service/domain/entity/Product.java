@@ -21,7 +21,9 @@ public class Product {
     @UuidGenerator
     @GeneratedValue
     private UUID id;
-    @Column(nullable = false,unique = true)
+    @Column(name = "product_code", nullable = false,unique = true)
+    private String productCode;
+    @Column(nullable = false)
     private String name;
     private String description;
     private String brand;
