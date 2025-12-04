@@ -10,6 +10,7 @@ import me.randika.eventmart_product_service.exception.ProductNotFoundException;
 import me.randika.eventmart_product_service.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,17 +27,17 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest productRequest)
             throws ProductCategoryNotFoundException, DuplicateProductCodeException {
-        return ResponseEntity.ok(productService.createProduct(productRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productRequest));
     }
 
     @Operation(summary = "Update a Product")
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable UUID id, @RequestBody ProductRequest productRequest)
             throws ProductCategoryNotFoundException, ProductNotFoundException, DuplicateProductCodeException {
         return ResponseEntity.ok(productService.updateProduct(id,productRequest));
     }
 
-    @Operation(summary = "Get paginated list of product")
+    @Operation(summary = "Get paginated list of products")
     @GetMapping
     public ResponseEntity<Page<ProductResponse>> getAllProducts(Pageable pageable){
         return ResponseEntity.ok(productService.productList(pageable));
@@ -53,11 +54,8 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable UUID id)
             throws ProductNotFoundException {
-
         productService.deleteProductById(id);
         return ResponseEntity.noContent().build();
     }
-
-
 
 }
