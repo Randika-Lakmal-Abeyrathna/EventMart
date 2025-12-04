@@ -96,7 +96,7 @@ class ProductServiceImplTest {
         when(productRepository.save(any(Product.class))).thenReturn(saved);
         when(productMapper.toResponse(saved)).thenReturn(expectedResponse);
 
-        ProductResponse response = productService.createdProduct(request);
+        ProductResponse response = productService.createProduct(request);
 
         assertNotNull(response);
         assertEquals(expectedResponse.id(), response.id());
@@ -115,7 +115,7 @@ class ProductServiceImplTest {
 
         when(productRepository.existsByProductCode("P-001")).thenReturn(true);
 
-        assertThrows(DuplicateProductCodeException.class, () -> productService.createdProduct(request));
+        assertThrows(DuplicateProductCodeException.class, () -> productService.createProduct(request));
 
         verify(productRepository).existsByProductCode("P-001");
         verifyNoMoreInteractions(productRepository);
@@ -129,7 +129,7 @@ class ProductServiceImplTest {
         when(productRepository.existsByProductCode("P-002")).thenReturn(false);
         when(productCategoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
-        assertThrows(ProductCategoryNotFoundException.class, () -> productService.createdProduct(request));
+        assertThrows(ProductCategoryNotFoundException.class, () -> productService.createProduct(request));
 
         verify(productRepository).existsByProductCode("P-002");
         verify(productCategoryRepository).findById(categoryId);
