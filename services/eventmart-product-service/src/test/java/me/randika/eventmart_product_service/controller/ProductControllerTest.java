@@ -4,11 +4,16 @@ package me.randika.eventmart_product_service.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.randika.eventmart_product_service.domain.dto.request.ProductRequest;
 import me.randika.eventmart_product_service.domain.dto.response.ProductResponse;
+import me.randika.eventmart_product_service.exception.DuplicateProductCodeException;
+import me.randika.eventmart_product_service.exception.GlobalExceptionHandler;
+import me.randika.eventmart_product_service.exception.ProductCategoryNotFoundException;
+import me.randika.eventmart_product_service.exception.ProductNotFoundException;
 import me.randika.eventmart_product_service.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(ProductController.class)
+@Import(GlobalExceptionHandler.class)
 @ActiveProfiles("test")
 class ProductControllerTest {
 
@@ -133,6 +139,66 @@ class ProductControllerTest {
 
         mockMvc.perform(delete("/api/v1/products/" + id))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testGetProductById_NotFound() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        Mockito.when(productService.getProductById(id))
+                .thenThrow(new ProductNotFoundException("Product not found: " + id));
+
+        mockMvc.perform(get("/api/v1/products/" + id))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("PRODUCT_NOT_FOUND"))
+                .andExpect(jsonPath("$.message").value("Product not found: " + id));
+    }
+
+    @Test
+    void testCreateProduct_DuplicateCode() throws Exception {
+        ProductRequest request = new ProductRequest(
+                "P001", "Product A", "Test dis", UUID.randomUUID(),
+                new BigDecimal("10.0"), "test brand", "ACTIVE"
+        );
+
+        Mockito.when(productService.createProduct(any()))
+                .thenThrow(new DuplicateProductCodeException("Product Code already exists: P001"));
+
+        mockMvc.perform(post("/api/v1/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("DUPLICATE_PRODUCT_CODE"))
+                .andExpect(jsonPath("$.message").value("Product Code already exists: P001"));
+    }
+
+    @Test
+    void testCreateProduct_CategoryNotFound() throws Exception {
+        ProductRequest request = new ProductRequest(
+                "P002", "Product B", "Test B", UUID.randomUUID(),
+                new BigDecimal("15.0"), "brandB", "ACTIVE"
+        );
+
+        Mockito.when(productService.createProduct(any()))
+                .thenThrow(new ProductCategoryNotFoundException("Category not found"));
+
+        mockMvc.perform(post("/api/v1/products")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("PRODUCT_CATEGORY_NOT_FOUND"))
+                .andExpect(jsonPath("$.message").value("Category not found"));
+    }
+
+    @Test
+    void testUnhandledException_InternalServerError() throws Exception {
+        Mockito.when(productService.productList(any()))
+                .thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(get("/api/v1/products"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.code").value("INTERNAL_ERROR"))
+                .andExpect(jsonPath("$.error").value("Internal Server Error"));
     }
 
 
