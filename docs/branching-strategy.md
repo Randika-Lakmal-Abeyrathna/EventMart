@@ -112,7 +112,7 @@
    ```
 
 6. Open a Pull Request (PR) into `develop`:
-   - Use the PR template (see `doc/pull-request-template.md`)
+   - Use the PR template (see `docs/pull_request_template.md`)
    - Request reviews from relevant service owners
    - Address feedback, force-push if needed after rebase
 
@@ -152,7 +152,7 @@
 ## 5. PR & commit requirements
 
 ### Pull requests
-- Must use the PR template (`doc/pull-request-template.md`)
+- Must use the PR template (`docs/pull_request_template.md`)
 - Must pass all CI checks (tests, lints, builds)
 - Must have at least 1 approval from a code owner or team member
 - Must reference related issue/ticket (e.g., AVMART-123)
