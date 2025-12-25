@@ -114,21 +114,25 @@ CREATE DATABASE product_db;
 
 ### 2️⃣ Environment Variables
 
-**Option A:** Create `application-local.properties`
+**Option A:** Create `application-local.yml`
 
 Copy the example file:
 
 ```bash
-cp src/main/resources/application-local.properties.example src/main/resources/application-local.properties
+cp src/main/resources/application-local.yml.example src/main/resources/application-local.yml
 ```
 
-Update with your credentials:
+Update values as needed (the example already reads from environment variables):
 
-```properties
-DB_URL=jdbc:postgresql://localhost:5432/product_db
-DB_USERNAME=Dev
-DB_PASSWORD=Dev@123
+```yaml
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 ```
+
+> Keep secrets (DB credentials, tokens, etc.) in `.env` and never commit them. IntelliJ does not automatically load `.env`, so ensure your run configuration exports these environment variables.
 
 **Option B:** Set environment variables in your IDE run configuration:
 
@@ -208,8 +212,8 @@ Example migration files:
 |------|---------|
 | `application.yml` | Common/shared configuration |
 | `application-docker.yml` | Docker-specific configuration |
-| `application-local.properties.example` | Template for local DB credentials |
-| `.env` | Runtime secrets for Docker (not committed) |
+| `application-local.yml.example` | Template for local DB credentials (reads from env) |
+| `.env` | Runtime secrets for Docker/local (not committed) |
 | `docker-compose.dev.yml` | Local integration environment |
 
 ---
@@ -217,8 +221,8 @@ Example migration files:
 ## 🔐 Security & Secrets
 
 - **No secrets are committed to Git**
-- `.env` and `application-local.properties` are ignored in `.gitignore`
-- Credentials are injected via environment variables
+- `.env`, `application-local.yml`, and other local override files are ignored in `.gitignore`
+- Credentials are injected via environment variables (e.g., from `.env` or your IDE run config)
 - Use strong passwords in production environments
 
 ---
