@@ -9,6 +9,8 @@ EventMart is a monorepo containing multiple microservices that work together to 
 ### eventmart-product-service
 Handles all product-related operations including catalog management, product information, and search functionality.
 
+📦 **[Product Service Documentation](services/eventmart-product-service/README.md)**
+
 ### eventmart-inventory-service
 Manages inventory and stock levels, warehouse operations, and stock alerts.
 
@@ -32,7 +34,7 @@ This is a monorepo structure where all services are maintained in a single repos
 ### Branching Strategy
 We follow a structured branching strategy to ensure smooth collaboration across multiple teams and services. Please review our comprehensive branching strategy document before starting development:
 
-📖 **[Branching Strategy Document](doc/branching-strategy.md)**
+📖 **[Branching Strategy Document](docs/branching-strategy.md)**
 
 Key highlights:
 - `main` branch is always production-ready
@@ -44,7 +46,7 @@ Key highlights:
 ### Pull Request Template
 When creating pull requests, please use our standardized PR template to ensure all necessary information is provided:
 
-📋 **[Pull Request Template](doc/pull-request-template.md)**
+📋 **[Pull Request Template](docs/pull_request_template.md)**
 
 The template includes:
 - Description and related tickets
