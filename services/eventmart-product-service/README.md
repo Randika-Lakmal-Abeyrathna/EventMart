@@ -264,10 +264,10 @@ Example migration files:
 
 ## 🏁 Summary
 
-| Mode | Use Case |
-|------|----------|
+| Mode       | Use Case                                              |
+|------------|-------------------------------------------------------|
 | **Docker** | Integration testing, team consistency, isolated environment |
-| **Local** | Debugging, rapid development, IDE support |
+| **Local**  | Debugging, rapid development, IDE support             |
 
 ---
 
