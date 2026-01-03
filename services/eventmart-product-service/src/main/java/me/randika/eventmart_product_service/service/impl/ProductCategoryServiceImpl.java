@@ -31,9 +31,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             throw new DuplicateProductCategoryException("Product category name exists: "+ productCategoryRequest.name());
         }
 
-        productCategoryRepository.findById(productCategoryRequest.parentCategoryId())
-                .orElseThrow(()-> new ProductCategoryNotFoundException("parent product category not found: "+
-                        productCategoryRequest.parentCategoryId()));
+        if (productCategoryRequest.parentCategoryId() != null){
+            productCategoryRepository.findById(productCategoryRequest.parentCategoryId())
+                    .orElseThrow(()-> new ProductCategoryNotFoundException("parent product category not found: "+
+                            productCategoryRequest.parentCategoryId()));
+        }
 
         ProductCategory  productCategory = productCategoryMapper.toEntity(productCategoryRequest);
 
