@@ -46,12 +46,11 @@ cp .env.example .env
 Update `.env` with your values:
 
 ```properties
-SPRING_PROFILES_ACTIVE=docker
-
-DB_URL=jdbc:postgresql://postgres:5432/product_db
-DB_USERNAME=Dev
-DB_PASSWORD=Dev@123
+DB_USERNAME=your_pg_user
+DB_PASSWORD=your_pg_password
 ```
+
+> **Note:** `SPRING_PROFILES_ACTIVE` and `SPRING_DATASOURCE_URL` are automatically set by Docker Compose — you do **not** need to include them in `.env` for Docker.
 
 ⚠️ **Note:** `.env` is not committed to version control.
 
@@ -214,7 +213,7 @@ Example migration files:
 | `application-docker.yml` | Docker-specific configuration |
 | `application-local.yml.example` | Template for local DB credentials (reads from env) |
 | `.env` | Runtime secrets for Docker/local (not committed) |
-| `docker-compose.dev.yml` | Local integration environment |
+| `docker/docker-compose.dev.yml` | Local integration environment |
 
 ---
 
