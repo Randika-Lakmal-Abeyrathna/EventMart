@@ -11,9 +11,7 @@ jobs:
     strategy:
       matrix:
         service:
-          - eventmart-auth-service
           - eventmart-product-service
-          - eventmart-order-service
 
     steps:
       - name: Checkout
