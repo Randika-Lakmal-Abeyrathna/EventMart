@@ -7,8 +7,15 @@ spring:
 
   cloud:
     gateway:
-      routes:
-        - id: product-service
-          uri: http://product-service:8081
-          predicates:
-            - Path=/products/**
+      server:
+        webflux:
+          routes:
+            - id: product-service-products
+              uri: http://product-service:8081
+              predicates:
+                - Path=/api/v1/products, /api/v1/products/, /api/v1/products/**
+
+            - id: product-service-category
+              uri: http://product-service:8081
+              predicates:
+                - Path=/api/v1/productcategory, /api/v1/productcategory/, /api/v1/productcategory/**

@@ -21,7 +21,7 @@ public class ProductController {
     private final ProductService productService;
 
     @Operation(summary = "Create a Product")
-    @PostMapping
+    @PostMapping({"", "/"})
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest productRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productRequest));
     }
@@ -33,7 +33,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Get paginated list of products")
-    @GetMapping
+    @GetMapping({"", "/"})
     public ResponseEntity<Page<ProductResponse>> getAllProducts(Pageable pageable){
         return ResponseEntity.ok(productService.productList(pageable));
     }
