@@ -21,7 +21,7 @@ public class ProductCategoryController {
     private final ProductCategoryService productCategoryService;
 
     @Operation(summary = "create a product category")
-    @PostMapping
+    @PostMapping({"", "/"})
     public ResponseEntity<ProductCategoryResponse> createProductCategory(@RequestBody ProductCategoryRequest productCategoryRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(productCategoryService.createProductCategory(productCategoryRequest));
     }
@@ -33,7 +33,7 @@ public class ProductCategoryController {
     }
 
     @Operation(summary = "Get all product categories")
-    @GetMapping
+    @GetMapping({"", "/"})
     public ResponseEntity<Page<ProductCategoryResponse>> getAllProductCategories(Pageable pageable){
         return ResponseEntity.ok(productCategoryService.getProductCategories(pageable));
     }
