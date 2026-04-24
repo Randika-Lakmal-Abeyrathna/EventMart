@@ -19,6 +19,7 @@ jobs:
       matrix:
         service:
           - eventmart-product-service
+          - eventmart-gateway
 
     steps:
       - name: Checkout
