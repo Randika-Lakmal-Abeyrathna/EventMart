@@ -27,25 +27,25 @@ public class ProductController {
     }
 
     @Operation(summary = "Update a Product")
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable UUID id, @RequestBody ProductRequest productRequest) {
         return ResponseEntity.ok(productService.updateProduct(id,productRequest));
     }
 
     @Operation(summary = "Get paginated list of products")
-    @GetMapping({"", "/"})
+    @GetMapping
     public ResponseEntity<Page<ProductResponse>> getAllProducts(Pageable pageable){
         return ResponseEntity.ok(productService.productList(pageable));
     }
 
     @Operation(summary = "Get product by ID")
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable UUID id){
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @Operation(summary = "Delete product by ID")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable UUID id){
         productService.deleteProductById(id);
         return ResponseEntity.noContent().build();

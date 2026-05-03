@@ -27,25 +27,25 @@ public class ProductCategoryController {
     }
 
     @Operation(summary = "update a product category")
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     public ResponseEntity<ProductCategoryResponse> updateProductCategory(@PathVariable UUID id, @RequestBody ProductCategoryRequest productCategoryRequest){
         return ResponseEntity.ok(productCategoryService.updateProductCategory(id,productCategoryRequest));
     }
 
     @Operation(summary = "Get all product categories")
-    @GetMapping({"", "/"})
+    @GetMapping
     public ResponseEntity<Page<ProductCategoryResponse>> getAllProductCategories(Pageable pageable){
         return ResponseEntity.ok(productCategoryService.getProductCategories(pageable));
     }
 
     @Operation(summary = "Get product category by id")
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ProductCategoryResponse> getProductCategoryById(@PathVariable UUID id){
         return ResponseEntity.ok(productCategoryService.getProductCategoryById(id));
     }
 
     @Operation(summary = "Delete product category by id")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteProductCategoryById(@PathVariable UUID id){
         productCategoryService.deleteProductCategory(id);
         return ResponseEntity.noContent().build();
