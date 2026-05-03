@@ -106,6 +106,13 @@
 			<scope>test</scope>
 		</dependency>
 
+        <!-- Spring Security test utilities (@WithMockUser etc.) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Inline Mockito to avoid dynamic Java agent attachment at runtime -->
         <dependency>
             <groupId>org.mockito</groupId>
