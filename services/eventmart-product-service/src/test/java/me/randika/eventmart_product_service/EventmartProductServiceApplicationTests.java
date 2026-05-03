@@ -2,6 +2,8 @@ package me.randika.eventmart_product_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -11,6 +13,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest
 @Testcontainers
 class EventmartProductServiceApplicationTests {
+
+	@MockBean
+	JwtDecoder jwtDecoder;
 
 	@Container
 	@SuppressWarnings("resource")

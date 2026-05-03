@@ -12,3 +12,9 @@ spring:
   flyway:
     enabled: true
     connect-retries: 10
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/eventmart

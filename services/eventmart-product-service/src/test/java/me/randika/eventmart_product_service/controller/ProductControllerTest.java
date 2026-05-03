@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.randika.eventmart_product_service.domain.dto.request.ProductRequest;
 import me.randika.eventmart_product_service.domain.dto.response.ProductResponse;
 import me.randika.eventmart_product_service.exception.DuplicateProductCodeException;
+import me.randika.eventmart_product_service.config.SecurityConfig;
 import me.randika.eventmart_product_service.exception.GlobalExceptionHandler;
 import me.randika.eventmart_product_service.exception.ProductCategoryNotFoundException;
 import me.randika.eventmart_product_service.exception.ProductNotFoundException;
@@ -18,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,8 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(ProductController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({SecurityConfig.class, GlobalExceptionHandler.class})
 @ActiveProfiles("test")
+@WithMockUser
 class ProductControllerTest {
 
     @Autowired
@@ -45,6 +49,9 @@ class ProductControllerTest {
 
     @MockitoBean
     private ProductService productService;
+
+    @MockitoBean
+    private JwtDecoder jwtDecoder;
 
     @Autowired
     private ObjectMapper mapper;
@@ -86,7 +93,7 @@ class ProductControllerTest {
         Mockito.when(productService.updateProduct(eq(id), any(ProductRequest.class)))
                 .thenReturn(response);
 
-        mockMvc.perform(put("/api/v1/products/" + id)
+        mockMvc.perform(put("/api/v1/products/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -107,7 +114,7 @@ class ProductControllerTest {
         Mockito.when(productService.getProductById(id))
                 .thenReturn(response);
 
-        mockMvc.perform(get("/api/v1/products/" + id))
+        mockMvc.perform(get("/api/v1/products/id/" + id))
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) jsonPath("$.productCode").value("P001"))
                 .andExpect((ResultMatcher) jsonPath("$.name").value("Product A"));
@@ -137,7 +144,7 @@ class ProductControllerTest {
 
         Mockito.doNothing().when(productService).deleteProductById(id);
 
-        mockMvc.perform(delete("/api/v1/products/" + id))
+        mockMvc.perform(delete("/api/v1/products/id/" + id))
                 .andExpect(status().isNoContent());
     }
 
@@ -148,7 +155,7 @@ class ProductControllerTest {
         Mockito.when(productService.getProductById(id))
                 .thenThrow(new ProductNotFoundException("Product not found: " + id));
 
-        mockMvc.perform(get("/api/v1/products/" + id))
+        mockMvc.perform(get("/api/v1/products/id/" + id))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("PRODUCT_NOT_FOUND"))
                 .andExpect(jsonPath("$.message").value("Product not found: " + id));
