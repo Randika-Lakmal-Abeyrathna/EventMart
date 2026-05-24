@@ -17,4 +17,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/eventmart
+          # Use jwk-set-uri so the service fetches keys from the Docker-internal Keycloak
+          # without strictly validating the issuer hostname (localhost vs keycloak).
+          # This allows tokens obtained from http://localhost:8081 to be accepted.
+          jwk-set-uri: http://keycloak:8080/realms/eventmart/protocol/openid-connect/certs
